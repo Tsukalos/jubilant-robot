@@ -34,8 +34,12 @@
           this.y = 295;
           this.w = 10;
           this.h = 10;
+          this.points = 0;
         }
         var Player1 = new Player();
+
+        var timeRemaining = 30;
+
 
         keys = [];
 
@@ -76,7 +80,22 @@
           c.lineWidth=1;
           c.stroke();
           c.fill();
+          timeRemaining -= 0.02;
+        }
 
+        function drawHud(){
+          c.font = '18pt Calibri';
+          c.fillStyle = 'black';
+          c.filText("Points:", 10, 25);
+          c.fillText("Time remaining:", 120, 25);
+
+          if (timeRemaining < 10){
+            c.fillStyle = "red"
+          }
+          c.fillText(Math.ceil(timeRemaining),290, 25);
+
+          c.fillStyle = 'yellow';
+          c.fillText(Player1.points, 85, 25);
         }
 
       }
