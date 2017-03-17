@@ -29,21 +29,24 @@
         var c = canvas.getContext("2d");
         var WIDTH = canvas.width;
         var HEIGHT = canvas.height;
+
         function Player(){
           this.x = 395;
           this.y = 295;
           this.w = 10;
           this.h = 10;
           this.points = 0;
-        }
+        }//Player class
+
         var Player1 = new Player();
-
         var timeRemaining = 30;
-
-
         var keys = [];
-
         var coins = [];
+
+        createNewCoins();
+
+
+
 
         setInterval(mainDraw, 20);
 
@@ -78,9 +81,7 @@
               color: 'brown'
             }
           );
-
-
-        }
+        }//createNewCoins
 
         function drawCoins(){
           coins.forEach( function(i, j) {
@@ -92,27 +93,31 @@
             c.stroke();
             c.fill();
           });
-        }
+        }//drawCoins
 
 
 
         function playerMove(){
           if (keys[87]) {
             Player1.y -= 1;
+            //W
           }
           if (keys[83]) {
             Player1.y += 1;
+            //S
           }
           if (keys[65]) {
             Player1.x -= 1;
+            //A
           }
           if (keys[68]) {
             Player1.x += 1;
+            //D
           }
           return false;
-        }
+        }//playerMove
 
-        createNewCoins();
+
 
         canvas.addEventListener('keydown', function(e){
           keys[e.keyCode] = true;
@@ -123,6 +128,7 @@
 
         function mainDraw(){
           playerMove();
+          checkColision();
           c.clearRect(0, 0, WIDTH, HEIGHT);
 
           drawCoins();
@@ -137,7 +143,9 @@
           c.stroke();
           c.fill();
           timeRemaining -= 0.02;
-        }
+
+        }// mainDraw
+
 
         function drawHud(){
           c.font = '18pt Calibri';
@@ -152,9 +160,26 @@
 
           c.fillStyle = 'yellow';
           c.fillText(Player1.points, 85, 25);
+        }//drawHud
+
+        function collides(a, b){
+          return	a.x < b.x + b.w &&
+                  a.x + a.w > b.x &&
+                  a.y < b.y + b.h &&
+                  a.y + a.h > b.y;
+        }//colides
+
+        function checkColision(){
+          coins.forEach(function(i, j){
+            if (collides(i, Player1)) {
+              Player1.points += i.points;
+              coins.splice(0);
+              createNewCoins();
+            }
+          })
         }
 
-      }
+      }//init
 
     </script>
 
@@ -164,7 +189,6 @@
     <div id="holder">
         <canvas id="canvas" width="800" height="600" tabindex='1'></canvas>
     </div>
-
 
 </body>
 
