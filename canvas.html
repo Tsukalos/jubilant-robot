@@ -112,6 +112,8 @@
           return false;
         }
 
+        createNewCoins();
+
         canvas.addEventListener('keydown', function(e){
           keys[e.keyCode] = true;
         });
@@ -122,7 +124,7 @@
         function mainDraw(){
           playerMove();
           c.clearRect(0, 0, WIDTH, HEIGHT);
-          createNewCoins();
+
           drawCoins();
           drawHud();
           c.fillStyle="red";
