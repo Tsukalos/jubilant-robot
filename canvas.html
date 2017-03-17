@@ -41,9 +41,60 @@
         var timeRemaining = 30;
 
 
-        keys = [];
+        var keys = [];
+
+        var coins = [];
 
         setInterval(mainDraw, 20);
+
+        function createNewCoins(){
+          coins.push(
+            {
+              x: Math.floor(Math.random()*800),
+              y: Math.floor(Math.random()*600),
+              w: 10,
+              h: 10,
+              points: 10,
+              color: 'yellow'
+            }
+          );
+          coins.push(
+            {
+              x: Math.floor(Math.random()*800),
+              y: Math.floor(Math.random()*600),
+              w: 25,
+              h: 25,
+              points: 5,
+              color: 'grey'
+            }
+          );
+          coins.push(
+            {
+              x: Math.floor(Math.random()*800),
+              y: Math.floor(Math.random()*600),
+              w: 50,
+              h: 50,
+              points: 2,
+              color: 'brown'
+            }
+          );
+
+
+        }
+
+        function drawCoins(){
+          coins.forEach( function(i, j) {
+            c.beginPath();
+            c.fillStyle=i.color;
+            c.strokeStyle=i.color;
+            c.rect(i.x,i.y,i.w,i.h);
+            c.lineWidth=1;
+            c.stroke();
+            c.fill();
+          });
+        }
+
+
 
         function playerMove(){
           if (keys[87]) {
@@ -71,6 +122,8 @@
         function mainDraw(){
           playerMove();
           c.clearRect(0, 0, WIDTH, HEIGHT);
+          createNewCoins();
+          drawCoins();
           drawHud();
           c.fillStyle="red";
           c.strikeStyle="blue";
